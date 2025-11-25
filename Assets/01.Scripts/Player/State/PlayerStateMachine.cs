@@ -8,6 +8,7 @@ public class PlayerStateMachine : StateMachine
 
     public PlayerIdleState IdleState { get; private set; }
     public PlayerRunState RunState { get; private set; }
+    public PlayerAttackState AttackState { get; private set; }
 
 
     public PlayerStateMachine(Player player)
@@ -16,6 +17,7 @@ public class PlayerStateMachine : StateMachine
 
         IdleState = new PlayerIdleState(this);
         RunState = new PlayerRunState(this);
+        AttackState = new PlayerAttackState(this);
 
         MovementSpeed = player.Data.BaseData.BaseSpeed;
         RotationDamping = player.Data.BaseData.BaseRotationDamping;

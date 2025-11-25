@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerAttackModeState : PlayerBaseState
 {
+    private float _currentCoolTime;
+    private float _attackCoolTime;
+    protected bool canAttack;
+
     public PlayerAttackModeState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -12,6 +16,11 @@ public class PlayerAttackModeState : PlayerBaseState
     {
         base.Enter();
         StartAnimation(stateMachine.Player.AnimationData.AttackModeParameterHash);
+
+        _currentCoolTime = 0f;
+        _attackCoolTime = stateMachine.Player.Data.AttackData.AttackCoolTime;
+
+        canAttack = false;
     }
 
 
@@ -24,6 +33,20 @@ public class PlayerAttackModeState : PlayerBaseState
     public override void Update()
     {
         base.Update();
+        CheckAttackCoolTime();
+    }
+
+    private void CheckAttackCoolTime()
+    {
+        if (canAttack) return;
+
+        // AttackCoolTime 체크
+        _currentCoolTime += Time.deltaTime;
+        if(_currentCoolTime >= _attackCoolTime)
+        {
+            _currentCoolTime = 0f;
+            canAttack = true;
+        }
     }
 
     public override void PhysicsUpdate()

@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public class PlayerIdleState : PlayerAttackModeState
 {
     public PlayerIdleState(PlayerStateMachine stateMachine) : base(stateMachine)
@@ -24,5 +26,14 @@ public class PlayerIdleState : PlayerAttackModeState
     public override void Update()
     {
         base.Update();
+        CheckAttack();
+    }
+
+    private void CheckAttack()
+    {
+        if (canAttack)
+        {
+            stateMachine.ChangeState(stateMachine.AttackState);
+        }
     }
 }
