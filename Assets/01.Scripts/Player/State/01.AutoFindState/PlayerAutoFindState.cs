@@ -64,12 +64,10 @@ public class PlayerAutoFindState : PlayerBaseState
         // 목표와 거리를 비교하여 공격모드로 전환 
         if(stateMachine.Player.Agent.remainingDistance <= stateMachine.Player.Agent.stoppingDistance)
         {
-            Debug.Log("전환");
             isMovingToTarget = false;
+            StopAgent();
             stateMachine.ChangeState(stateMachine.IdleState);
         }
-
-        Debug.Log("남은 거리: " + (stateMachine.Player.Agent.stoppingDistance - stateMachine.Player.Agent.remainingDistance));
     }
 
     public override void PhysicsUpdate()
