@@ -17,16 +17,31 @@ public class Player : MonoBehaviour
 
     private PlayerStateMachine _stateMachine;
 
+    [field:SerializeField] public Weapon Weapon { get; private set; }  
+
+    public Health Health { get; private set; }
+
+    public Transform Head { get; private set; }
+
 
     private void Awake()
     {
         AnimationData.Initialize();
         Animator = GetComponentInChildren<Animator>();
+        Weapon = GetComponentInChildren<Weapon>(true);
 
         Agent = GetComponent<NavMeshAgent>();
+        Health = GetComponent<Health>();
+
+        Head = transform.GetChild(0).transform;
 
         _stateMachine = new PlayerStateMachine(this);
+    }
+
+    private void Start()
+    {
         _stateMachine.ChangeState(_stateMachine.RunState);
+        Health.OnDie += OnDie;
     }
 
     private void Update()
@@ -38,5 +53,11 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         _stateMachine.PhysicsUpdate();
+    }
+
+    public void OnDie()
+    {
+        Animator.SetTrigger("Die");
+        enabled = false;
     }
 }

@@ -6,9 +6,11 @@ public class MonsterChasingState : MonsterBaseState
 {
     private bool _isMovingToTarget = false;
     private float _stoppingDistance = 1f;
+    private Transform _head;
 
     public MonsterChasingState(MonsterStateMachine stateMachine) : base(stateMachine)
     {
+        
     }
 
     public override void Enter()
@@ -21,6 +23,11 @@ public class MonsterChasingState : MonsterBaseState
         SetStoppingDistance(_stoppingDistance);
         StartAgent();
         MoveToTarget();
+
+        if(stateMachine.Target.TryGetComponent<Player>(out Player player))
+        {
+            _head = player.Head;
+        }
     }
 
     private void MoveToTarget()
@@ -51,23 +58,20 @@ public class MonsterChasingState : MonsterBaseState
     {
         if (!_isMovingToTarget) return;
 
-        Vector3 toTarget = (stateMachine.Target.transform.position - stateMachine.Monster.transform.position).normalized;
-        float dot = Vector3.Dot(stateMachine.Monster.transform.forward, toTarget);
+        Vector3 toTarget = (_head.position - stateMachine.Monster.transform.position).normalized;
+        float dot = Vector3.Dot(_head.forward, toTarget);
+
+        RotateToTarget(toTarget);
 
         // 목표와 거리를 비교하여 공격모드로 전환 
         if (stateMachine.Monster.Agent.remainingDistance <= stateMachine.Monster.Agent.stoppingDistance)
         {
-            // Target을 바라보도록 방향 전환
-            if(dot < 0.85f)
-            {
-                RotateToTarget(toTarget);
-            }
-            else
-            {
-                _isMovingToTarget = false;
-                StopAgent();
-                stateMachine.ChangeState(stateMachine.AttackIdleState);
-            }
+            Quaternion targetRotation = Quaternion.LookRotation(toTarget * 10f);
+            stateMachine.Monster.transform.rotation = targetRotation;
+
+            _isMovingToTarget = false;
+            StopAgent();
+            stateMachine.ChangeState(stateMachine.AttackIdleState);
         }
     }
 
