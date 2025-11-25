@@ -16,6 +16,10 @@ public class Monster : MonoBehaviour
 
     private MonsterStateMachine _stateMachine;
 
+    public Transform Head { get; private set; }
+
+    public Health Health { get; private set; }
+
     private void Awake()
     {
         AnimationData.Initialize();
@@ -23,16 +27,29 @@ public class Monster : MonoBehaviour
 
         Agent = GetComponent<NavMeshAgent>();
 
+        Head = transform.GetChild(0).transform;
+
+        Health = GetComponent<Health>();
+
         _stateMachine = new MonsterStateMachine(this);
     }
 
     private void Start()
     {
         _stateMachine.ChangeState(_stateMachine.IdleState);
+        Health.OnDie += OnDie;
     }
 
     private void Update()
     {
         _stateMachine.Update();
+    }
+
+    public void OnDie()
+    {
+        Animator.SetTrigger("Die");
+        enabled = false;
+        Agent.isStopped = true;
+        Agent.enabled = false;
     }
 }
