@@ -8,6 +8,7 @@ public class PlayerRunState : PlayerAutoFindState
     {
         base.Enter();
         StartAgent();
+        SetSpeed(stateMachine.Player.Data.BaseData.BaseSpeed * stateMachine.Player.Data.BaseData.RunSpeedModifier);
         StartAnimation(stateMachine.Player.AnimationData.RunParameterHash);
     }
 

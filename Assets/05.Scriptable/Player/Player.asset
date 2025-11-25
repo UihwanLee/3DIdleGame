@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   <BaseData>k__BackingField:
-    <BaseSpeed>k__BackingField: 5
+    <BaseSpeed>k__BackingField: 4
     <BaseRotationDamping>k__BackingField: 1
     <WalkSpeedModifier>k__BackingField: 0.225
-    <RunSpeedModifier>k__BackingField: 1
+    <RunSpeedModifier>k__BackingField: 1.2
   <AttackData>k__BackingField:
-    <AttackDamage>k__BackingField: 0
+    <AttackDamage>k__BackingField: 5
