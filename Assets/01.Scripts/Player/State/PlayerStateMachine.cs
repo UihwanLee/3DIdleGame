@@ -6,6 +6,10 @@ public class PlayerStateMachine : StateMachine
     public float RotationDamping { get; private set; }
     public float MovementSpeedModifier { get; private set; }
 
+    public bool IsAttacking { get; set; }
+    public int ComboIndex { get; set; }
+    public int CurrentComboIndex { get; set; }
+
     public PlayerIdleState IdleState { get; private set; }
     public PlayerRunState RunState { get; private set; }
     public PlayerAttackState AttackState { get; private set; }

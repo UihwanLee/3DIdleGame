@@ -12,7 +12,7 @@ public class PlayerAnimationData
 
     [SerializeField] private string _attackModeParameterName = "@AttackMode";
     [SerializeField] private string _idleParameterName = "Idle";
-    [SerializeField] private string _attackParmeterName = "Attack";
+    [SerializeField] private string _attackParmeterName = "ComboAttack";
 
     public int AutoFindParameterHash { get; private set; }
     public int IdleParameterHash { get; private set; }

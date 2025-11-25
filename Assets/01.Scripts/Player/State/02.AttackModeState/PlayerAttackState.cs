@@ -4,42 +4,69 @@ using UnityEngine;
 
 public class PlayerAttackState : PlayerAttackModeState
 {
-    private float _attackDuration;
-    private float _currentDuration;
-    private Coroutine _attackCoroutine;
+    private bool _alreadAppliedCombo;
+
+    AttackInfoData attackInfoData;
 
     public PlayerAttackState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
-        _attackDuration = 0.4f;
+
     }
 
     public override void Enter()
     {
-        base.Enter();
-        StartAnimation(stateMachine.Player.AnimationData.AttackParameterHash);
+        _alreadAppliedCombo = false;
+        stateMachine.IsAttacking = true;
 
-        _currentDuration = 0f;
+        int comboindex = stateMachine.CurrentComboIndex;
+        attackInfoData = stateMachine.Player.Data.AttackData.GetAttackInfoData(comboindex);
+        stateMachine.Player.Animator.SetInteger("Combo", comboindex);
+        StartAnimation(stateMachine.Player.AnimationData.AttackParameterHash);
     }
 
     public override void Exit()
     {
         base.Exit();
-        canAttack = false;
         StopAnimation(stateMachine.Player.AnimationData.AttackParameterHash);
     }
 
     public override void Update()
     {
         base.Update();
-        Attack();
+
+        float normalizedTime = GetNormalizedTime(stateMachine.Player.Animator, "Attack");
+        if(normalizedTime < 1f)
+        {
+            // 콤보 시도
+            if (normalizedTime >= attackInfoData.ComboTransitionTime)
+                TryComboAttack();
+        }
+        else
+        {
+            if(_alreadAppliedCombo)
+            {
+                stateMachine.CurrentComboIndex += 1;
+                stateMachine.ChangeState(stateMachine.AttackState);
+            }
+            else
+            {
+                stateMachine.CurrentComboIndex = 0;
+                stateMachine.IsAttacking = false;
+                stateMachine.ChangeState(stateMachine.IdleState);
+            }
+        }
     }
 
-    private void Attack()
+    private void TryComboAttack()
     {
-        _currentDuration += Time.deltaTime;
-        if (_currentDuration > _attackDuration)
-        {
-            stateMachine.ChangeState(stateMachine.IdleState);
-        }
+        if (_alreadAppliedCombo) return;
+
+        if (attackInfoData.ComboStateIndex == -1) return;
+
+        if (!stateMachine.IsAttacking) return;
+
+        if (stateMachine.CurrentComboIndex >= stateMachine.ComboIndex) return;
+
+        _alreadAppliedCombo = true;
     }
 }

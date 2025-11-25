@@ -6,7 +6,6 @@ public class PlayerAttackModeState : PlayerBaseState
 {
     private float _currentCoolTime;
     private float _attackCoolTime;
-    protected bool canAttack;
 
     public PlayerAttackModeState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
@@ -20,7 +19,7 @@ public class PlayerAttackModeState : PlayerBaseState
         _currentCoolTime = 0f;
         _attackCoolTime = stateMachine.Player.Data.AttackData.AttackCoolTime;
 
-        canAttack = false;
+        stateMachine.IsAttacking = false;
     }
 
 
@@ -38,14 +37,14 @@ public class PlayerAttackModeState : PlayerBaseState
 
     private void CheckAttackCoolTime()
     {
-        if (canAttack) return;
+        if (stateMachine.IsAttacking) return;
 
         // AttackCoolTime 체크
         _currentCoolTime += Time.deltaTime;
         if(_currentCoolTime >= _attackCoolTime)
         {
             _currentCoolTime = 0f;
-            canAttack = true;
+            stateMachine.IsAttacking = true;
         }
     }
 

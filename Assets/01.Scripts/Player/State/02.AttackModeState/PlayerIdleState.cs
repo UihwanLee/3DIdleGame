@@ -31,8 +31,11 @@ public class PlayerIdleState : PlayerAttackModeState
 
     private void CheckAttack()
     {
-        if (canAttack)
+        if (stateMachine.IsAttacking)
         {
+            // 콤보 랜덤으로 설정
+            stateMachine.ComboIndex = Random.Range(0, 3);
+
             stateMachine.ChangeState(stateMachine.AttackState);
         }
     }
