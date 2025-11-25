@@ -18,6 +18,8 @@ public class PlayerAutoFindState : PlayerBaseState
         base.Enter();
         StartAnimation(stateMachine.Player.AnimationData.AutoFindParameterHash);
 
+        Debug.Log("AutoFindMode 전환");
+
         SetStoppingDistance(_stoppingDistance);
         SetTargetMonster();
         MoveToTarget();
@@ -28,7 +30,7 @@ public class PlayerAutoFindState : PlayerBaseState
         _target = null;
 
         // 근방의 몬스터를 찾아서 Destination 찾기
-        Monster monster = GameObject.FindFirstObjectByType<Monster>();
+        Monster monster = FindNearByMonster();
         if (monster != null)
         {
             _target = monster.transform;
@@ -39,6 +41,46 @@ public class PlayerAutoFindState : PlayerBaseState
                 _head = enemy.Head;
             }
         }
+        else
+        {
+            Debug.Log("근방에 몬스터가 없습니다!");
+
+            // 마지막 탈출구 찾기
+        }
+    }
+
+    private Monster FindNearByMonster()
+    {
+        // 몬스터를 찾을 최대 반경 설정 (원하는 값으로 변경)
+        float searchRadius = 50f;
+        Collider[] hitColliders = Physics.OverlapSphere(stateMachine.Player.transform.position, searchRadius);
+
+        Monster nearestMonster = null;
+        float shortestDistanceSqr = searchRadius * searchRadius;
+
+        foreach (Collider hitCollider in hitColliders)
+        {
+            // hitCollider에서 Monster가 있는지 확인
+            if (hitCollider.TryGetComponent<Monster>(out Monster monster))
+            {
+                // 자기 자신 제외
+                if (monster.transform == stateMachine.Player.transform) continue;
+
+                // 죽은 monster 제외
+                if (monster.GetComponent<Health>().IsDead) continue;
+
+                // 반경 내에 있는 몬스터들 중에서 가장 가까운 몬스터 찾기
+                float distanceSqr = (monster.transform.position - stateMachine.Player.transform.position).sqrMagnitude;
+
+                if (distanceSqr < shortestDistanceSqr)
+                {
+                    shortestDistanceSqr = distanceSqr;
+                    nearestMonster = monster;
+                }
+            }
+        }
+
+        return nearestMonster;
     }
 
     private void MoveToTarget()

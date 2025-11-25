@@ -38,6 +38,8 @@ public class PlayerAttackState : PlayerAttackModeState
     {
         base.Update();
 
+        CheckTargetDead();
+
         float normalizedTime = GetNormalizedTime(stateMachine.Player.Animator, "Attack");
         if(normalizedTime < 1f)
         {
@@ -100,5 +102,19 @@ public class PlayerAttackState : PlayerAttackModeState
         if (stateMachine.CurrentComboIndex >= stateMachine.ComboIndex) return;
 
         _alreadAppliedCombo = true;
+    }
+
+    private void CheckTargetDead()
+    {
+        // Target이 죽었는지 확인
+        if(stateMachine.Target != null)
+        {
+            if(stateMachine.Target.IsDead)
+            {
+                stateMachine.CurrentComboIndex = 0;
+                stateMachine.IsAttacking = false;
+                stateMachine.ChangeState(stateMachine.RunState);
+            }
+        }
     }
 }
