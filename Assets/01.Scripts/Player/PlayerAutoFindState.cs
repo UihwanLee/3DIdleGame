@@ -4,6 +4,7 @@ public class PlayerAutoFindState : PlayerBaseState
 {
     private Transform target;
     private bool isMovingToTarget = false;
+    private float stoppingDistance = 2f;
 
     public PlayerAutoFindState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
@@ -15,6 +16,8 @@ public class PlayerAutoFindState : PlayerBaseState
 
         base.Enter();
         StartAnimation(stateMachine.Player.AnimationData.AutoFindParameterHash);
+
+        SetStoppingDistance(stoppingDistance);
         SetTargetMonster();
         MoveToTarget();
     }
@@ -51,6 +54,22 @@ public class PlayerAutoFindState : PlayerBaseState
     public override void Update()
     {
         base.Update();
+        CheckDistanceTarget();
+    }
+
+    private void CheckDistanceTarget()
+    {
+        if (!isMovingToTarget) return;
+
+        // 목표와 거리를 비교하여 공격모드로 전환 
+        if(stateMachine.Player.Agent.remainingDistance <= stateMachine.Player.Agent.stoppingDistance)
+        {
+            Debug.Log("전환");
+            isMovingToTarget = false;
+            stateMachine.ChangeState(stateMachine.IdleState);
+        }
+
+        Debug.Log("남은 거리: " + (stateMachine.Player.Agent.stoppingDistance - stateMachine.Player.Agent.remainingDistance));
     }
 
     public override void PhysicsUpdate()

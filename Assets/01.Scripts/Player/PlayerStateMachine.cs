@@ -9,6 +9,7 @@ public class PlayerStateMachine : StateMachine
     public PlayerIdleState IdleState { get; private set; }
     public PlayerRunState RunState { get; private set; }
 
+
     public PlayerStateMachine(Player player)
     {
         this.Player = player;

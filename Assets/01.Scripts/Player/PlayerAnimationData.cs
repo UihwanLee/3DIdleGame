@@ -7,21 +7,30 @@ using UnityEngine;
 public class PlayerAnimationData
 {
     [SerializeField] private string _autoFindParameterName = "@AutoFind";
-    [SerializeField] private string _idleParameterName = "Idle";
     [SerializeField] private string _walkParameterName = "Walk";
     [SerializeField] private string _runParameterName = "Run";
+
+    [SerializeField] private string _attackModeParameterName = "@AttackMode";
+    [SerializeField] private string _idleParameterName = "Idle";
+    [SerializeField] private string _attackParmeterName = "Attack";
 
     public int AutoFindParameterHash { get; private set; }
     public int IdleParameterHash { get; private set; }
     public int WalkParameterHash { get; private set; }
     public int RunParameterHash { get; private set; }
 
+    public int AttackModeParameterHash { get; private set; }
+    public int AttackParameterHash { get; private set; }
+
     public void Initialize()
     {
         AutoFindParameterHash = Animator.StringToHash(_autoFindParameterName);
-        IdleParameterHash = Animator.StringToHash(_idleParameterName);
         WalkParameterHash = Animator.StringToHash(_walkParameterName);
         RunParameterHash = Animator.StringToHash(_runParameterName);
+
+        AttackModeParameterHash = Animator.StringToHash(_attackModeParameterName);
+        IdleParameterHash = Animator.StringToHash(_idleParameterName);
+        AttackParameterHash = Animator.StringToHash(_attackParmeterName);
     }
 
 }
