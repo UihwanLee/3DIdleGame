@@ -47,4 +47,24 @@ public class PlayerBaseState : IState
     {
         stateMachine.Player.Animator.SetBool(animatorHash, false);
     }
+
+    protected void StartAgent()
+    {
+        stateMachine.Player.Agent.isStopped = false;
+    }
+
+    protected void StopAgent()
+    {
+        stateMachine.Player.Agent.isStopped = true;
+    }
+
+    protected void SetStoppingDistance(float distance)
+    {
+        stateMachine.Player.Agent.stoppingDistance = distance;
+    }
+
+    protected void SetSpeed(float speed)
+    {
+        stateMachine.Player.Agent.speed = speed;
+    }
 }

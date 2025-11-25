@@ -20,6 +20,8 @@ public class StateMachine
         currentState?.Exit();
         currentState = state;
         currentState?.Enter();
+
+        Debug.Log($"{currentState} 전환");
     }
 
     public void HandleInput()

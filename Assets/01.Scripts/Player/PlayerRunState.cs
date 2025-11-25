@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class PlayerRunState : PlayerAutoFindState
 {
     public PlayerRunState(PlayerStateMachine stateMachine) : base(stateMachine)
@@ -11,12 +7,14 @@ public class PlayerRunState : PlayerAutoFindState
     public override void Enter()
     {
         base.Enter();
+        StartAgent();
         StartAnimation(stateMachine.Player.AnimationData.RunParameterHash);
     }
 
     public override void Exit()
     {
         base.Exit();
+        StopAgent();
         StopAnimation(stateMachine.Player.AnimationData.RunParameterHash);
     }
 
