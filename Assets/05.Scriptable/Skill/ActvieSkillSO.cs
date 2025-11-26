@@ -19,6 +19,6 @@ public class ActvieSkillSO : SkillSO
     public override void Excute(ISkillCaster caster)
     {
         // 휠 윈드 애니메이션 재생
-        caster.ExcuteWheelWindAttack();
+        caster.ExcuteWheelWindAttack(ActvieInfo);
     }
 }

@@ -21,8 +21,8 @@ public enum BuffType
 
 public interface ISkillCaster
 {
-    void ExcuteWheelWindAttack();
-    void ApplyBuff(float value);
+    void ExcuteWheelWindAttack(ActvieInfo actvieInfo);
+    void ApplyBuff(BuffInfo buffInfo, BuffType type);
 
     GameObject GetGameObject();
 }
