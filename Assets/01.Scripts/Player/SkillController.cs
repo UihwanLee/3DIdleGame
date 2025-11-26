@@ -5,7 +5,13 @@ using UnityEngine;
 
 public class SkillController : MonoBehaviour, ISkillCaster
 {
+    private Player player;
     private Coroutine _applyBuffHealCorutine;
+
+    private void Awake()
+    {
+        player = GetComponent<Player>();
+    }
 
     // 버프 적용
     public void ApplyBuff(BuffInfo buffInfo, BuffType type)
@@ -45,15 +51,24 @@ public class SkillController : MonoBehaviour, ISkillCaster
     {
         float buffDuration = buffInfo.ExcuteDuration;
         float curDuration = 0.0f;
+        float tickInterval = 0.5f;
 
         // 버프 지속 시간 동안 실행
-        while(curDuration < buffDuration)
+        while (curDuration < buffDuration)
         {
             curDuration += Time.deltaTime;
 
-            // 플레이어 회복
+            int healAmount = (int)(buffInfo.ValueMultiplier * player.Health.CurHealth);
 
-            yield return null;
+            // 플레이어 회복
+            player.Health.AddHealth(healAmount);
+
+            // Damage Text 표시
+            FloatingTextPoolManager.Instance.SpawnText(TextType.Damage, $"+{healAmount}", player.Head.transform, Color.green);
+
+            yield return new WaitForSeconds(tickInterval);
+
+            curDuration += tickInterval;
         }
     }
 

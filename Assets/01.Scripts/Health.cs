@@ -30,6 +30,11 @@ public class Health : MonoBehaviour
         this._damageTransform = target;
     }
 
+    public void AddHealth(int amount)
+    {
+        _health = Mathf.Min(_maxHealth, _health + amount);
+    }
+
     public void TakeDamage(int damage)
     {
         if (_health == 0) return;
