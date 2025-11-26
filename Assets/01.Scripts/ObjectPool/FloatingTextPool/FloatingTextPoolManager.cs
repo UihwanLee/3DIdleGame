@@ -54,6 +54,8 @@ public class FloatingTextPoolManager : MonoBehaviour
                 return;
             }
         }
+
+        Debug.Log($"해당 {key} Pool을 찾을 수 없습니다!");
     }
 
     public void SpawnText(TextType type, string text, Transform target, Color? color = null)
@@ -67,6 +69,8 @@ public class FloatingTextPoolManager : MonoBehaviour
                 return;
             }
         }
+
+        Debug.Log($"해당 {type} Pool을 찾을 수 없습니다!");
     }
 
     public void Release(string key, GameObject obj)
