@@ -42,6 +42,9 @@ public class Player : MonoBehaviour
     {
         _stateMachine.ChangeState(_stateMachine.RunState);
         Health.OnDie += OnDie;
+
+        // 데미지 표시는 Head Transform 위치를 따라감
+        Health.SetDamageTransform(Head);
     }
 
     private void Update()
