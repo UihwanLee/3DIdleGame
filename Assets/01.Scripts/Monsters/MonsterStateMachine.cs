@@ -7,7 +7,7 @@ public class MonsterStateMachine : StateMachine
     public Monster Monster { get; }
 
 
-    public GameObject Target { get; private set; }
+    public Health Target { get; private set; }
     public MonsterIdleState IdleState { get; }
     public MonsterAttackState AttackState { get; }
     public MonsterChasingState ChasingState { get; }
@@ -18,7 +18,7 @@ public class MonsterStateMachine : StateMachine
     public MonsterStateMachine(Monster monster)
     {
         this.Monster = monster;
-        Target = GameObject.FindGameObjectWithTag("Player");
+        Target = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
 
         IdleState = new MonsterIdleState(this);
         AttackState = new MonsterAttackState(this);
