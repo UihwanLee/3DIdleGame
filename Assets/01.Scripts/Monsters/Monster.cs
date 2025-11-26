@@ -15,7 +15,7 @@ public class Monster : MonoBehaviour
     [field: SerializeField] public NavMeshAgent Agent { get; private set; }
 
     private MonsterStateMachine _stateMachine;
-
+    [field: SerializeField] public Weapon Weapon { get; private set; }
     public Transform Head { get; private set; }
 
     public Health Health { get; private set; }
@@ -30,6 +30,8 @@ public class Monster : MonoBehaviour
         Head = transform.GetChild(0).transform;
 
         Health = GetComponent<Health>();
+
+        Weapon = GetComponentInChildren<Weapon>(true);
 
         _stateMachine = new MonsterStateMachine(this);
     }
