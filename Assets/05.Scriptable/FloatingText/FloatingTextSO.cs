@@ -8,9 +8,11 @@ public enum TextType
 }
 
 [CreateAssetMenu(fileName = "FloatingText", menuName = "TextUI/FloatingText")]
-public class FloatingText : ScriptableObject
+public class FloatingTextSO : ScriptableObject
 {
     public string textName;
     public TextType type;
     public Color color;
+    public float duration;
+    public float floatingDist;
 }
