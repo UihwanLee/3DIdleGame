@@ -17,9 +17,11 @@ public class Player : MonoBehaviour
 
     private PlayerStateMachine _stateMachine;
 
-    [field:SerializeField] public Weapon Weapon { get; private set; }  
+    [field:SerializeField] public Weapon Weapon { get; private set; }
 
-    public Health Health { get; private set; }
+    [field: Header("Component")]
+    [field: SerializeField] public Health Health { get; private set; }
+    [field: SerializeField] public SkillController SkillController { get; private set; }
 
     public Transform Head { get; private set; }
 
@@ -34,6 +36,7 @@ public class Player : MonoBehaviour
         Health = GetComponent<Health>();
 
         Head = transform.GetChild(0).transform;
+        SkillController = GetComponent<SkillController>();
 
         _stateMachine = new PlayerStateMachine(this);
     }
