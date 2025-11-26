@@ -30,4 +30,11 @@ public class Health : MonoBehaviour
             OnDie?.Invoke();
         }
     }
+
+    #region 프로퍼티
+
+    public int MaxHealth { get { return _maxHealth; } }
+    public int CurHealth { get { return _health; } }
+
+    #endregion
 }
