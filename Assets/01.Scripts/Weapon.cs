@@ -10,6 +10,7 @@ public class Weapon : MonoBehaviour
 
     private List<Collider> alreadyCollider = new List<Collider>();
 
+
     private void OnEnable()
     {
         alreadyCollider.Clear();

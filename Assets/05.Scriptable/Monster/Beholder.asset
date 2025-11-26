@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04c6d0539e6de544a7fd9ce333bbfb6, type: 3}
   m_Name: Beholder
   m_EditorClassIdentifier: 
-  <ChaseRange>k__BackingField: 3
+  <ChaseRange>k__BackingField: 5
   <AttackRange>k__BackingField: 1.5
   <AttackCoolTime>k__BackingField: 1
   Damage: 5
-  <Dealing_Start_TransitionTime>k__BackingField: 0
-  <Dealing_End_TransitionTime>k__BackingField: 0
+  <Dealing_Start_TransitionTime>k__BackingField: 0.1
+  <Dealing_End_TransitionTime>k__BackingField: 0.813

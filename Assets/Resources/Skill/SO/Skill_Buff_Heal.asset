@@ -18,5 +18,7 @@ MonoBehaviour:
   <SkillCoolTime>k__BackingField: 8
   <Type>k__BackingField: 1
   <BuffInfo>k__BackingField:
-    <ValueMultiplier>k__BackingField: 1.2
+    <ValueMultiplier>k__BackingField: 0.05
     <Type>k__BackingField: 1
+    <ExcuteDuration>k__BackingField: 4
+    <TickInterval>k__BackingField: 0.5

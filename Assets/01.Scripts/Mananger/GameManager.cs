@@ -6,19 +6,6 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _instance = null;
 
-    private void Awake()
-    {
-        if(_instance == null )
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
-
     public static GameManager Instance
     {
         get
@@ -37,8 +24,18 @@ public class GameManager : MonoBehaviour
     // 공유할 변수
     public Player Player { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 }

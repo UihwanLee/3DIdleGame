@@ -53,8 +53,8 @@ public class FloatingTextPool : MonoBehaviour
                 floatingText.SetText(text);
 
                 //// 색상 설정
-                //Color newColor = (Color)((color != null) ? color : _data.color);
-                //floatingText.SetColor(newColor);
+                Color newColor = (Color)((color != null) ? color : _data.color);
+                floatingText.SetColor(newColor);
 
                 // Duration 설정
                 floatingText.SetDuration(_data.duration);

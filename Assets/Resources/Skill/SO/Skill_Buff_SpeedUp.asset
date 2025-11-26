@@ -20,3 +20,5 @@ MonoBehaviour:
   <BuffInfo>k__BackingField:
     <ValueMultiplier>k__BackingField: 1.3
     <Type>k__BackingField: 0
+    <ExcuteDuration>k__BackingField: 4
+    <TickInterval>k__BackingField: 0.5
