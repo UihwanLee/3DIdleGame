@@ -21,7 +21,7 @@ public class StateMachine
         currentState = state;
         currentState?.Enter();
 
-        Debug.Log($"{currentState} 전환");
+        //Debug.Log($"{currentState} 전환");
     }
 
     public void HandleInput()

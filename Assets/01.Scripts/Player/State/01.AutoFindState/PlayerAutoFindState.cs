@@ -51,7 +51,7 @@ public class PlayerAutoFindState : PlayerBaseState
 
     private Monster FindNearByMonster()
     {
-        // 몬스터를 찾을 최대 반경 설정 (원하는 값으로 변경)
+        // OverlapSphere 반경
         float searchRadius = 50f;
         Collider[] hitColliders = Physics.OverlapSphere(stateMachine.Player.transform.position, searchRadius);
 
