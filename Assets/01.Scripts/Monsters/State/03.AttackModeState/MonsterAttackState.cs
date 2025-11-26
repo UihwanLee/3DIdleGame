@@ -35,12 +35,15 @@ public class MonsterAttackState : MonsterAttackModeState
         {
             if(!_alreadyAppliedDealing && normalizedTime >= stateMachine.Monster.Data.Dealing_Start_TransitionTime)
             {
+                RotateToTarget();
+                stateMachine.Monster.Weapon.SetAttack(stateMachine.Monster.Data.Damage);
+                stateMachine.Monster.Weapon.gameObject.SetActive(true);
                 _alreadyAppliedDealing = true;
             }
 
             if(_alreadyAppliedDealing && normalizedTime >= stateMachine.Monster.Data.Dealing_End_TransitionTime)
             {
-
+                stateMachine.Monster.Weapon.gameObject.SetActive(false);
             }
         }
         else
@@ -48,6 +51,18 @@ public class MonsterAttackState : MonsterAttackModeState
             stateMachine.IsAttacking = false;
             stateMachine.ChangeState(stateMachine.AttackIdleState);
             return;
+        }
+    }
+
+    private void RotateToTarget()
+    {
+        if (stateMachine.Target != null)
+        {
+            Transform head = stateMachine.Target.GetComponent<Player>().Head;
+            Vector3 toTarget = (head.position - stateMachine.Monster.transform.position).normalized;
+
+            Quaternion targetRotation = Quaternion.LookRotation(toTarget);
+            stateMachine.Monster.transform.rotation = targetRotation;
         }
     }
 }
