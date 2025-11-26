@@ -19,26 +19,24 @@ public enum BuffType
 
 // Active / Buff 모두 계수로 계산
 
-[Serializable]
-public class ActvieInfo
+public interface ISkillCaster
 {
-    [field: SerializeField][field: Range(1f, 3f)] public int DamageMultiplier { get; private set; }
-    [field: SerializeField][field: Range(0f, 1f)] public float Dealing_Start_TransitionTime { get; private set; }
-    [field: SerializeField][field: Range(0f, 1f)] public float Dealing_End_TransitionTime { get; private set; }
+    void ExcuteWheelWindAttack();
+    void ApplyBuff(float value);
+
+    GameObject GetGameObject();
 }
 
-[Serializable]
-public class BuffInfo
-{
-    [field: SerializeField][field: Range(1f, 2f)] public float ValueMultiplier { get; private set; }
-    [field: SerializeField] public BuffType Type { get; private set; }
-}
-
-[CreateAssetMenu(fileName = "Skill", menuName = "Active/Skill")]
-public class SkillSO : ScriptableObject
+public abstract class SkillSO : ScriptableObject
 {
     [field: SerializeField] public string SkillName { get; private set; }
+    [field: SerializeField] public Sprite SkillIcon { get; private set; }
+    [field: SerializeField] public float SkillCoolTime { get; private set; }
     [field: SerializeField] public SkillTpye Type { get; private set; }
-    [field: SerializeField] public ActvieInfo ActvieInfo { get; private set; }
-    [field: SerializeField] public BuffInfo BuffInfo { get; private set; }
+
+    #region 스킬 로직 실행
+
+    public abstract void Excute(ISkillCaster caster);
+
+    #endregion
 }
