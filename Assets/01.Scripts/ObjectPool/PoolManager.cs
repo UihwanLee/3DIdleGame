@@ -25,13 +25,15 @@ public class PoolManager : MonoBehaviour
         }
     }
 
+    private PoolManager() {}
+
     /// <summary>
     /// ObjectPool 생성 및 Dictonary 추가
     /// </summary>
     /// <param name="key">Pool이름</param>
     /// <param name="prefab">원본 데이터</param>
     /// <param name="initialSize">생성 개수</param>
-    public void CreatePool(string key, GameObject prefab, int initialSize)
+    public void CreatePool(string key, GameObject prefab, int initialSize, Transform parent = null)
     {
         // 이미 존재하는지 확인
         if (objectPools.ContainsKey(key))
@@ -40,13 +42,22 @@ public class PoolManager : MonoBehaviour
             return;
         }
 
-        // 부모 오브젝트 생성
-        GameObject poolParent = new GameObject($"Pool_{key}");
-        poolParent.transform.SetParent(this.transform);
+        if(parent == null)
+        {
+            // 부모 오브젝트 생성
+            GameObject poolParent = new GameObject($"Pool_{key}");
+            poolParent.transform.SetParent(this.transform);
 
-        // ObjectPool 생성
-        ObjectPool pool = new ObjectPool(prefab, initialSize, poolParent.transform);
-        objectPools.Add(key, pool);
+            // ObjectPool 생성
+            ObjectPool pool = new ObjectPool(prefab, initialSize, poolParent.transform);
+            objectPools.Add(key, pool);
+        }
+        else
+        {
+            // ObjectPool 생성
+            ObjectPool pool = new ObjectPool(prefab, initialSize, parent);
+            objectPools.Add(key, pool);
+        }
     }
 
     /// <summary>
