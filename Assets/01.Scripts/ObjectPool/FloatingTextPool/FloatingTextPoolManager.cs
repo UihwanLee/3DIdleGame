@@ -1,0 +1,83 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// FloatingTextPool을 전역에서 가져오게 할 수 있는 스크립트
+/// </summary>
+public class FloatingTextPoolManager : MonoBehaviour
+{
+    private static FloatingTextPoolManager _instance;
+
+    private void Awake()
+    {
+        if(_instance == null )
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public static FloatingTextPoolManager Instance
+    {
+        get
+        {
+            if( _instance == null )
+            {
+                return null;
+            }
+            return _instance;
+        }
+    }
+
+    private FloatingTextPoolManager() { }
+
+    private List<FloatingTextPool> floatingTexts = new List<FloatingTextPool>();
+
+    public void Add(FloatingTextPool pool)
+    {
+        floatingTexts.Add(pool);
+    }
+
+    public void SpawnText(string key, string text, Transform target, Color? color = null)
+    {
+        // Key로 찾기
+        foreach (var floatText in floatingTexts)
+        {
+            if (floatText.Key == key)
+            {
+                floatText.SpawnText(text, target, color);
+                return;
+            }
+        }
+    }
+
+    public void SpawnText(TextType type, string text, Transform target, Color? color = null)
+    {
+        // Type으로 찾기
+        foreach (var floatText in floatingTexts)
+        {
+            if (floatText.Type == type)
+            {
+                floatText.SpawnText(text, target, color);
+                return;
+            }
+        }
+    }
+
+    public void Release(string key, GameObject obj)
+    {
+        foreach (var floatText in floatingTexts)
+        {
+            if (floatText.Key == key)
+            {
+                floatText.Release(obj);
+                return;
+            }
+        }
+    }
+}
