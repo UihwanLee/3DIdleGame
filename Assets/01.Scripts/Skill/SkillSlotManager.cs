@@ -10,7 +10,7 @@ public class SkillSlotManager : MonoBehaviour
     [SerializeField] private Transform slotParent;
 
     // Resources 폴더 내부 경로
-    private const string SkillSlotPrefabResourcePath = "Skill/Prefab";
+    private const string SkillSlotPrefabResourcePath = "Skill/Prefab/Slot/SkillSlot";
     private const string SkillSOResourcePath = "Skill/SO";
 
     private void Start()
@@ -23,6 +23,14 @@ public class SkillSlotManager : MonoBehaviour
     {
         // 슬롯 parent 초기화
         slotParent = transform.FindChild<Transform>("SkillSlots");
+
+        // slotPrefab 초기화
+        slotPrefab = Resources.Load<GameObject>(SkillSlotPrefabResourcePath);
+
+        if(slotPrefab == null)
+        {
+            Debug.Log("SkillSlopPrefab 로드 못함");
+        }
 
         // skillList 초기화 -> Resources 폴더 내 /SO/Skill 내 있는 모든 SkillSO 가져오기
         skillArray = Resources.LoadAll<SkillSO>(SkillSOResourcePath);
@@ -39,8 +47,29 @@ public class SkillSlotManager : MonoBehaviour
 
         for (int i=0;  i<skillArray.Length; i++)
         {
+
             SkillSlot slot = Instantiate(slotPrefab, slotParent).GetComponent<SkillSlot>();
-            slot.SetSkill(skillArray[i]);
+
+            SkillSO data = skillArray[i];
+
+            switch (skillArray[i].Type)
+            {
+                case SkillTpye.Active:
+                    {
+                        SkillActive skillActive = new SkillActive(data);
+                        slot.SetSkill(skillActive);
+                    }
+                    break;
+                case SkillTpye.Buff:
+                    {
+                        SkillBuff skillBuff = new SkillBuff(data);
+                        slot.SetSkill(skillBuff);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
             slot.SetSkillCaster(caster);
             slot.Initialize();
         }

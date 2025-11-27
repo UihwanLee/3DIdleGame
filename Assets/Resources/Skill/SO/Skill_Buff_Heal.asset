@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c8f69d89637b04f90f91dd1e897036, type: 3}
+  m_Script: {fileID: 11500000, guid: df66541ac45e9cc4dbab6ea7c1bf16bb, type: 3}
   m_Name: Skill_Buff_Heal
   m_EditorClassIdentifier: 
   <SkillName>k__BackingField: "\uD790"
@@ -17,8 +17,12 @@ MonoBehaviour:
     type: 3}
   <SkillCoolTime>k__BackingField: 8
   <Type>k__BackingField: 1
+  <ActvieInfo>k__BackingField:
+    <DamageMultiplier>k__BackingField: 0
+    <Dealing_Start_TransitionTime>k__BackingField: 0
+    <Dealing_End_TransitionTime>k__BackingField: 0
   <BuffInfo>k__BackingField:
-    <ValueMultiplier>k__BackingField: 0.05
+    <ValueMultiplier>k__BackingField: 1.08
     <Type>k__BackingField: 1
     <ExcuteDuration>k__BackingField: 4
-    <TickInterval>k__BackingField: 0.5
+    <TickInterval>k__BackingField: 2

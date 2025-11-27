@@ -17,26 +17,32 @@ public enum BuffType
     Heal,
 }
 
-// Active / Buff 모두 계수로 계산
-
-public interface ISkillCaster
+[Serializable]
+public class ActvieInfo
 {
-    void ExcuteWheelWindAttack(ActvieInfo actvieInfo);
-    void ApplyBuff(BuffInfo buffInfo, BuffType type);
-
-    GameObject GetGameObject();
+    [field: SerializeField][field: Range(1f, 3f)] public int DamageMultiplier { get; private set; }
+    [field: SerializeField][field: Range(0f, 1f)] public float Dealing_Start_TransitionTime { get; private set; }
+    [field: SerializeField][field: Range(0f, 1f)] public float Dealing_End_TransitionTime { get; private set; }
 }
 
-public abstract class SkillSO : ScriptableObject
+[Serializable]
+public class BuffInfo
+{
+    [field: SerializeField][field: Range(0f, 2f)] public float ValueMultiplier { get; private set; }
+    [field: SerializeField] public BuffType Type { get; private set; }
+    [field: SerializeField][field: Range(0f, 5f)] public float ExcuteDuration { get; private set; }
+    [field: SerializeField][field: Range(0f, 5f)] public float TickInterval { get; private set; }
+}
+
+[CreateAssetMenu(fileName = "Skill", menuName = "Data/Skill")]
+public class SkillSO : ScriptableObject
 {
     [field: SerializeField] public string SkillName { get; private set; }
     [field: SerializeField] public Sprite SkillIcon { get; private set; }
     [field: SerializeField] public float SkillCoolTime { get; private set; }
     [field: SerializeField] public SkillTpye Type { get; private set; }
 
-    #region 스킬 로직 실행
+    [field: SerializeField] public ActvieInfo ActvieInfo { get; private set; }
 
-    public abstract void Excute(ISkillCaster caster);
-
-    #endregion
+    [field: SerializeField] public BuffInfo BuffInfo { get; private set; }
 }

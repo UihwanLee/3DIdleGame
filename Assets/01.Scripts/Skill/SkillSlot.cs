@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class SkillSlot : MonoBehaviour
 {
     [Header("Data")]
-    [SerializeField] private SkillSO _data;
+    [SerializeField] private Skill _data;
 
     [Header("Component")]
     [SerializeField] private Image _icon;
@@ -75,14 +75,14 @@ public class SkillSlot : MonoBehaviour
         if (_skillCoolTimeCoroutine != null) StopCoroutine(_skillCoolTimeCoroutine);
     }
 
-    public void SetSkill(SkillSO skill)
+    public void SetSkill(Skill skill)
     {
         this._data = skill;
 
-        _icon.sprite = skill.SkillIcon;
-        _title.text = skill.SkillName;
+        _icon.sprite = skill.Data.SkillIcon;
+        _title.text = skill.Data.SkillName;
 
-        _skillCoolTime = skill.SkillCoolTime;
+        _skillCoolTime = skill.Data.SkillCoolTime;
 
         ResetComponent();
     }
