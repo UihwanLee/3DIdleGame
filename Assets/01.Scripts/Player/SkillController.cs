@@ -58,10 +58,10 @@ public class SkillController : MonoBehaviour, ISkillCaster
         {
             curDuration += Time.deltaTime;
 
-            int healAmount = (int)(buffInfo.ValueMultiplier * player.Health.CurHealth);
+            int healAmount = (int)(buffInfo.ValueMultiplier * player.Condition.Hp);
 
             // 플레이어 회복
-            player.Health.AddHealth(healAmount);
+            player.Condition.AddCondition(ConditionType.Hp, healAmount);
 
             // Damage Text 표시
             FloatingTextPoolManager.Instance.SpawnText(TextType.Damage, $"+{healAmount}", player.Head.transform, Color.green);

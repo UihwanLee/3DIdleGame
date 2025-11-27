@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,11 +21,15 @@ public class Player : MonoBehaviour
     [field:SerializeField] public Weapon Weapon { get; private set; }
 
     [field: Header("Component")]
-    [field: SerializeField] public Health Health { get; private set; }
     [field: SerializeField] public SkillController SkillController { get; private set; }
 
     public Transform Head { get; private set; }
 
+    public PlayerConiditionHandler Condition { get; private set; }
+
+    public event Action<ItemData> ItemGetEvent; // 플레이어가 아이템을 흭득했을 때 이벤트
+
+    public ItemData CurrentWeapon { get; set; }
 
     private void Awake()
     {
@@ -33,21 +38,21 @@ public class Player : MonoBehaviour
         Weapon = GetComponentInChildren<Weapon>(true);
 
         Agent = GetComponent<NavMeshAgent>();
-        Health = GetComponent<Health>();
 
         Head = transform.GetChild(0).transform;
         SkillController = GetComponent<SkillController>();
 
         _stateMachine = new PlayerStateMachine(this);
+
+        Condition = GetComponent<PlayerConiditionHandler>();
     }
 
     private void Start()
     {
         _stateMachine.ChangeState(_stateMachine.RunState);
-        Health.OnDie += OnDie;
 
         // 데미지 표시는 Head Transform 위치를 따라감
-        Health.SetDamageTransform(Head);
+        Condition.SetDamageTransform(Head);
     }
 
     private void Update()
@@ -61,9 +66,10 @@ public class Player : MonoBehaviour
         _stateMachine.PhysicsUpdate();
     }
 
-    public void OnDie()
+    public void GetItem(ItemData item)
     {
-        Animator.SetTrigger("Die");
-        enabled = false;
+        ItemGetEvent?.Invoke(item);
     }
+
+    public PlayerStateMachine StateMachine { get { return _stateMachine; } }
 }

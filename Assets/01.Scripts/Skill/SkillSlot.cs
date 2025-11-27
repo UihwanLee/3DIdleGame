@@ -56,7 +56,6 @@ public class SkillSlot : MonoBehaviour
     public void SetSkillCaster(ISkillCaster skillCaster)
     {
         this._skillCaster = skillCaster;
-        if(this._skillCaster != null) Debug.Log("할당 완료: " + this._skillCaster);
     }
 
 
