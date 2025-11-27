@@ -19,6 +19,7 @@ MonoBehaviour:
   canStack: 0
   maxStackAmount: 0
   weaponInfo:
+    baseDamage: 15
     enhanceLevel: 0
     enhancePrice: 100
   consumables: []
