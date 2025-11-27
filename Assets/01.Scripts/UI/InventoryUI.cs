@@ -9,51 +9,93 @@ public class InventoryUI : MonoBehaviour
 {
     [SerializeField] private ItemSlot[] slots;
 
-    public GameObject inventoryWindow;
-    public Transform slotPanel;
+    [SerializeField] private GameObject _inventoryWindow;
+    [SerializeField] private Transform _slotPanel;
 
     [Header("Select Item")]
-    [SerializeField] private Image selectedItemIcon;
-    [SerializeField] private TextMeshProUGUI selectedItemName;
-    [SerializeField] private TextMeshProUGUI selectedItemDescription;
-    [SerializeField] private TextMeshProUGUI curDamageStat;
-    [SerializeField] private TextMeshProUGUI curSpeedStat;
-    [SerializeField] private GameObject useButton;
-    [SerializeField] private GameObject enhanceButton;
-    [SerializeField] private TextMeshProUGUI enhancePrice;
+    [SerializeField] private Image _selectedItemIcon;
+    [SerializeField] private TextMeshProUGUI _selectedItemName;
+    [SerializeField] private TextMeshProUGUI _selectedItemDescription;
+    [SerializeField] private TextMeshProUGUI _curDamageStat;
+    [SerializeField] private TextMeshProUGUI _curSpeedStat;
+    [SerializeField] private GameObject _useButton;
+    [SerializeField] private GameObject _enhanceButton;
+    [SerializeField] private GameObject _equipButton;
+    [SerializeField] private TextMeshProUGUI _enhancePrice;
 
-    private ItemSlot currentSelectedSlot;
-    private Player player;
+    [Header("StartItem")]
+    [SerializeField] private List<ItemData> _startItem;
+
+    private ItemSlot _currentSelectedSlot;
+    private ItemSlot _currentEquipSlot;
+
+    private Player _player;
+
+    private void Awake()
+    {
+        Initialize();
+    }
+
+    private void Reset()
+    {
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        _inventoryWindow = GameObject.Find("Window");
+        _slotPanel = transform.FindChild<Transform>("InventorySlots");
+
+        _selectedItemIcon = transform.FindChild<Image>("CurItemImg");
+        _selectedItemName = transform.FindChild<TextMeshProUGUI>("CurItemName");
+        _selectedItemDescription = transform.FindChild<TextMeshProUGUI>("CurItemDesc");
+        _curDamageStat = transform.FindChild<TextMeshProUGUI>("Damage Stat");
+        _curSpeedStat = transform.FindChild<TextMeshProUGUI>("Speed Stat");
+        _useButton = GameObject.Find("Interaction_consume");
+        _enhanceButton = GameObject.Find("Interaction_enhacne");
+        _equipButton = GameObject.Find("Interaction_equip");
+        _enhancePrice = transform.FindChild<TextMeshProUGUI>("enhance_gold");
+    }
 
     private void Start()
     {
-        player = GameManager.Instance.Player;
+        _player = GameManager.Instance.Player;
 
-        inventoryWindow.SetActive(false);
-        slots = new ItemSlot[slotPanel.childCount];
+        _inventoryWindow.SetActive(false);
+        slots = new ItemSlot[_slotPanel.childCount];
 
         for(int i=0; i<slots.Length; i++)
         {
             int index = i;
-            slots[i] = slotPanel.GetChild(i).GetComponent<ItemSlot>();
+            slots[i] = _slotPanel.GetChild(i).GetComponent<ItemSlot>();
             slots[i].Initialize(index, this);
             slots[i].GetComponent<Button>().onClick.AddListener(()=> SelectedItem(index));
         }
 
         ClearSelectedItemWindow();
+        GetStartEquipment();
     }
 
     public void ClearSelectedItemWindow()
     {
-        selectedItemIcon.gameObject.SetActive(false);
-        selectedItemName.text = string.Empty;
-        selectedItemDescription.text = string.Empty;
+        _selectedItemIcon.gameObject.SetActive(false);
+        _selectedItemName.text = string.Empty;
+        _selectedItemDescription.text = string.Empty;
         //curDamageStat.text = string.Empty;
         //curSpeedStat.text = string.Empty;
 
-        enhancePrice.text = string.Empty;
-        useButton.SetActive(false);
-        enhanceButton.SetActive(false);
+        _enhancePrice.text = string.Empty;
+        _useButton.SetActive(false);
+        _enhanceButton.SetActive(false);
+    }
+
+    private void GetStartEquipment()
+    {
+        // 초반 시작에 검을 들고 시작
+        foreach(ItemData item in _startItem)
+        {
+            AddItem(item);
+        }
     }
 
     public void SelectedItem(int index)
@@ -62,44 +104,49 @@ public class InventoryUI : MonoBehaviour
 
         slots[index].isSelected = !slots[index].isSelected;
 
-        if(currentSelectedSlot != null)
+        if(_currentSelectedSlot != null)
         {
-            currentSelectedSlot.ResetSlot();
+            _currentSelectedSlot.ResetSlot();
         }
 
-        if(currentSelectedSlot == slots[index])
+        if(_currentSelectedSlot == slots[index])
         {
-            currentSelectedSlot.ResetSlot();
-            currentSelectedSlot = null;
+            _currentSelectedSlot.ResetSlot();
+            _currentSelectedSlot = null;
         }
         else
         {
-            currentSelectedSlot = slots[index];
-            currentSelectedSlot.SelectSlot();
+            _currentSelectedSlot = slots[index];
+            _currentSelectedSlot.SelectSlot();
         }
 
-        if(currentSelectedSlot != null)
+        if(_currentSelectedSlot != null)
         {
-            ItemData item = currentSelectedSlot.item;
-            if (item != null) SetSelectedItme(item);
+            ItemData item = _currentSelectedSlot.item;
+            if (item != null) SetSelectedItme(item, slots[index]);
         }
     }
 
-    private void SetSelectedItme(ItemData item)
+    private void SetSelectedItme(ItemData item, ItemSlot slot)
     {
-        selectedItemIcon.gameObject.SetActive(true);
-        selectedItemIcon.sprite = item.data.icon;
-        selectedItemName.text = item.data.displayName;
-        selectedItemDescription.text = item.data.description;
+        _selectedItemIcon.gameObject.SetActive(true);
+        _selectedItemIcon.sprite = item.data.icon;
+        _selectedItemName.text = item.data.displayName;
+        _selectedItemDescription.text = item.data.description;
         
         // 아이템 타입에 따라 강화 or 소비 버튼 표시
         switch(item.data.type)
         {
             case ItemType.Equipalbe:
-                enhanceButton.SetActive(true);
+                _enhanceButton.SetActive(true);
+                _enhancePrice.text = item.data.weaponInfo.enhancePrice.ToString();
+                _selectedItemName.text += $" (+{item.data.weaponInfo.enhanceLevel}강)";
+                _equipButton.GetComponentInChildren<Button>().onClick.AddListener(() => EquipItem(slot));
+                _enhanceButton.GetComponentInChildren<Button>().onClick.AddListener(() => EnhacneItem(item));
                 break;
             case ItemType.Consumable:
-                useButton.SetActive(true);
+                _useButton.SetActive(true);
+                _useButton.GetComponentInChildren<Button>().onClick.AddListener(() => UseItem(item));
                 break;
             default:
                 break;
@@ -132,7 +179,40 @@ public class InventoryUI : MonoBehaviour
             }
 
             // 일치하지 않다면 빈 슬롯에 저장
-            if (slot.item == null) slot.SetItem(item);
+            if (slot.item == null)
+            {
+                slot.SetItem(item);
+                return;
+            }
         }
+    }
+
+    public void EquipItem(ItemSlot slot)
+    {
+        // 슬롯 설정
+        if(_currentEquipSlot != null)
+        {
+            _currentEquipSlot.SetEquip(false);
+        }
+
+        _currentEquipSlot = slot;
+        _currentEquipSlot.SetEquip(true);
+
+        // 플레이어에게 전달
+        ItemData weapon = _currentEquipSlot.item;
+        if(weapon != null)
+        {
+            //player
+        }
+    }
+
+    public void EnhacneItem(ItemData item)
+    {
+
+    }
+
+    public void UseItem(ItemData item)
+    {
+
     }
 }
