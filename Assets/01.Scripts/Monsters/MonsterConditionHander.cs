@@ -34,7 +34,6 @@ public class MonsterConditionHander : ConditionHandler
         {
             if (dropItem.DropPercentage >= value)
             {
-                Debug.Log("Value:" + value);
                 monster.StateMachine.Target.GetComponent<Player>().GetItem(dropItem.DropItem.GetComponent<ItemData>());
             }
         }

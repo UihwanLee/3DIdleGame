@@ -3307,7 +3307,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 6a94b0e04591b9d48ade5b9efec0628e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6708,7 +6708,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: cf69717bc064adb459b94c2d4b27534c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9102,6 +9102,7 @@ MonoBehaviour:
     _attackModeParameterName: '@AttackMode'
     _idleParameterName: Idle
     _attackParmeterName: ComboAttack
+    _skillWheelWindParameterName: WheelWind
   <Agent>k__BackingField: {fileID: 0}
   <Weapon>k__BackingField: {fileID: 0}
   <SkillController>k__BackingField: {fileID: 0}
