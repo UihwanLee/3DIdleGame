@@ -51,7 +51,13 @@ public class PlayerAttackState : PlayerAttackModeState
             if (!_alreadyAppliedDealing && normalizedTime >= attackData.GetAttackInfoData(stateMachine.CurrentComboIndex).Dealing_Start_TransitionTime)
             {
                 RotateToTarget();
-                stateMachine.Player.Weapon.SetAttack(attackData.GetAttackInfoData(stateMachine.CurrentComboIndex).Damage);
+
+                // 데미지 계산
+                float damgeMultiplier = attackData.GetAttackInfoData(stateMachine.CurrentComboIndex).DamageMultiplier;
+                float damage = CaculateDamage(damgeMultiplier);
+
+                // 데미지 주기
+                stateMachine.Player.Weapon.SetAttack((int)damage);
                 stateMachine.Player.Weapon.gameObject.SetActive(true);
                 _alreadyAppliedDealing = true;
             }

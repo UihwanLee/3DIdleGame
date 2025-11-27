@@ -88,4 +88,9 @@ public class PlayerBaseState : IState
             return 0f;
         }
     }
+
+    protected float CaculateDamage(float damageMultiplier)
+    {
+        return stateMachine.Player.Data.BaseData.BaseDamage * damageMultiplier;
+    }
 }

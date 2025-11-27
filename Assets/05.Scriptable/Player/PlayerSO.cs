@@ -5,7 +5,8 @@ using UnityEngine;
 [Serializable]
 public class PlayerBaseData
 {
-    [field: SerializeField][field: Range(0f, 25f)] public float BaseSpeed { get; private set; }
+    [field: SerializeField] public float BaseSpeed { get; set; }
+    [field: SerializeField] public float BaseDamage { get; set; }
     [field: SerializeField][field: Range(0f, 25f)] public float BaseRotationDamping { get; private set; }
 
     [field: Header("IdleData")]
@@ -23,8 +24,6 @@ public class PlayerAttackData
     [field:SerializeField] public List<AttackInfoData> AttackInfoDatas { get; private set; }
     public int GetAttackInfoCount() { return AttackInfoDatas.Count; }
     public AttackInfoData GetAttackInfoData(int index) { return  AttackInfoDatas[index]; }
-
-    [field: SerializeField][field: Range(5f, 20f)] public float AttackDamage { get; private set; }
     [field: SerializeField][field: Range(0f, 5f)] public float AttackCoolTime { get; private set; }
 }
 
@@ -36,7 +35,7 @@ public class AttackInfoData
     [field: SerializeField][field:Range(0f, 1f)] public float ComboTransitionTime { get; private set; }
     [field: SerializeField][field:Range(0f, 3f)] public float ForceTransitionTime { get; private set; }
     [field: SerializeField][field:Range(-10f, 10f)] public float Force { get; private set; }
-    [field: SerializeField] public int Damage;
+    [field: SerializeField][field:Range(1f, 4f)] public float DamageMultiplier;
     [field: SerializeField][field: Range(0f, 1f)] public float Dealing_Start_TransitionTime { get; private set; }
     [field: SerializeField][field: Range(0f, 1f)] public float Dealing_End_TransitionTime { get; private set; }
 }
