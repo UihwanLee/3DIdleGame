@@ -17,6 +17,14 @@ public enum ConsumableType
 }
 
 [Serializable]
+public class WeaponInfo
+{
+    public float baseDamage;
+    public int enhanceLevel;
+    public int enhancePrice;
+}
+
+[Serializable]
 public class ItemDataConsumable
 {
     public ConsumableType type;
@@ -35,6 +43,9 @@ public class ItemSO : ScriptableObject
     [Header("Stacking")]
     public bool canStack;
     public int maxStackAmount;
+
+    [Header("Weapon")]
+    public WeaponInfo weaponInfo;
 
     [Header("Consumable")]
     public ItemDataConsumable[] consumables;
