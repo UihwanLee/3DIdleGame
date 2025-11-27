@@ -11,6 +11,7 @@ public enum ConditionType
     Gold,
     Hp,
     MaxHp,
+    Speed,
 }
 
 public class ConditionHandler : MonoBehaviour
@@ -25,6 +26,8 @@ public class ConditionHandler : MonoBehaviour
     protected Condition _gold;
     protected Condition _hp;
     protected Condition _lv;
+
+    protected Condition _speed;
 
     [SerializeField] protected PlayerConditionUI _conditionUI;
 
@@ -41,13 +44,14 @@ public class ConditionHandler : MonoBehaviour
         _atk = new Condition(_conditionInfo.BaseAtk);
         _maxExp = new Condition(_conditionInfo.BaseMaxExp);
         _maxHp = new Condition(_conditionInfo.BaseMaxHp);
+        _speed = new Condition(_conditionInfo.BaseSpeed);
 
         _exp = new Condition(0f);
         _hp = new Condition(_maxHp.Value);
         _lv = new Condition(1f);
         _gold = new Condition(0f);
 
-        if(this.transform.gameObject.tag == "Player" && _conditionInfo != null)
+        if (this.transform.gameObject.tag == "Player" && _conditionInfo != null)
         {
             _conditionUI.UpdateExpBar(0f);
             _conditionUI.UpdateGold(_gold.Value.ToString("F0"));
@@ -117,12 +121,15 @@ public class ConditionHandler : MonoBehaviour
                     }
                 }
                 break;
+            case ConditionType.Speed:
+                _speed.AddValue(amount);
+                break;
             default:
                 break;
         }
     }
 
-    public void SubCondition(ConditionType tpye, float amount)
+    public void SubCondition(ConditionType tpye, float amount, Color? color = null)
     {
         switch (tpye)
         {
@@ -145,7 +152,7 @@ public class ConditionHandler : MonoBehaviour
                     Transform damageTransform = (this._damageTransform != null) ? this._damageTransform : this.transform;
 
                     // Damage Text 표시
-                    _floatingTextPoolManager.SpawnText(TextType.Damage, amount.ToString(), damageTransform);
+                    _floatingTextPoolManager.SpawnText(TextType.Damage, amount.ToString(), damageTransform, color);
 
                     if (_hp.Value == 0)
                     {
@@ -156,6 +163,39 @@ public class ConditionHandler : MonoBehaviour
                 break;
             case ConditionType.MaxHp:
                 _maxHp.SubVale(amount);
+                break;
+            case ConditionType.Speed:
+                _speed.SubVale(amount);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void SetCondition(ConditionType tpye, float amount)
+    {
+        switch (tpye)
+        {
+            case ConditionType.Atk:
+                _atk.SetValue(amount);
+                break;
+            case ConditionType.Exp:
+                _exp.SetValue(amount);
+                break;
+            case ConditionType.MaxExp:
+                _maxExp.SetValue(amount);
+                break;
+            case ConditionType.Gold:
+                _gold.SetValue(amount);
+                break;
+            case ConditionType.Hp:
+                _hp.SetValue(amount);
+                break;
+            case ConditionType.MaxHp:
+                _maxHp.SetValue(amount);
+                break;
+            case ConditionType.Speed:
+                _speed.SetValue(amount);
                 break;
             default:
                 break;
@@ -170,4 +210,6 @@ public class ConditionHandler : MonoBehaviour
     public float Atk { get { return _atk.Value; } }
     public float Hp { get { return _hp.Value; } }
     public float MaxHp { get { return _maxHp.Value; } }
+    public float Speed { get { return _speed.Value; }}
+    public ConditionInfoSO ConditionInfoSO { get { return _conditionInfo; } }
 }

@@ -27,20 +27,21 @@ public class PlayerAttackState : PlayerAttackModeState
         stateMachine.Player.Animator.SetInteger("Combo", comboindex);
         StartAnimation(stateMachine.Player.AnimationData.AttackParameterHash);
 
-        stateMachine.Player.Weapon.gameObject.SetActive(false);
+        if (!stateMachine.Player.SkillController.ActvingSkill) stateMachine.Player.Weapon.gameObject.SetActive(false);
     }
 
     public override void Exit()
     {
         base.Exit();
         StopAnimation(stateMachine.Player.AnimationData.AttackParameterHash);
-        stateMachine.Player.Weapon.gameObject.SetActive(false);
+        if (!stateMachine.Player.SkillController.ActvingSkill) stateMachine.Player.Weapon.gameObject.SetActive(false);
     }
 
     public override void Update()
     {
         base.Update();
 
+        //CheckDistance();
         CheckTargetDead();
 
         float normalizedTime = GetNormalizedTime(stateMachine.Player.Animator, "Attack");
@@ -67,7 +68,7 @@ public class PlayerAttackState : PlayerAttackModeState
 
             if (_alreadyAppliedDealing && normalizedTime >= stateMachine.Player.Data.AttackData.GetAttackInfoData(stateMachine.CurrentComboIndex).Dealing_End_TransitionTime)
             {
-                stateMachine.Player.Weapon.gameObject.SetActive(false);
+                if(!stateMachine.Player.SkillController.ActvingSkill) stateMachine.Player.Weapon.gameObject.SetActive(false);
             }
         }
         else
@@ -124,6 +125,15 @@ public class PlayerAttackState : PlayerAttackModeState
                 stateMachine.IsAttacking = false;
                 stateMachine.ChangeState(stateMachine.RunState);
             }
+        }
+    }
+
+    private void CheckDistance()
+    {
+        // 만약 타켓과의 거리가 멀다면 다시 추척모드
+        if (Vector3.Distance(_target.transform.position, stateMachine.Player.transform.position) < _stoppingDistance)
+        {
+            stateMachine.ChangeState(stateMachine.RunState);
         }
     }
 }

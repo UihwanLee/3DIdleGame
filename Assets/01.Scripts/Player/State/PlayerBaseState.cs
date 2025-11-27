@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerBaseState : IState
 {
+    protected Transform _target;
+    protected float _stoppingDistance = 1f;
     protected PlayerStateMachine stateMachine;
     protected readonly PlayerBaseData baseData;
 

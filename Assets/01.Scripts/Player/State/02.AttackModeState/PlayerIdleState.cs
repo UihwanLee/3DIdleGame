@@ -14,7 +14,6 @@ public class PlayerIdleState : PlayerAttackModeState
 
         // Agent 설정
         StopAgent();
-        SetSpeed(0f);
     }
 
     public override void Exit()
@@ -26,6 +25,7 @@ public class PlayerIdleState : PlayerAttackModeState
     public override void Update()
     {
         base.Update();
+        //CheckDistance();
         CheckAttack();
     }
 
@@ -37,6 +37,17 @@ public class PlayerIdleState : PlayerAttackModeState
             stateMachine.ComboIndex = Random.Range(0, 3);
 
             stateMachine.ChangeState(stateMachine.AttackState);
+        }
+    }
+
+    private void CheckDistance()
+    {
+        if (_target == null) Debug.Log("타켓이 널임");
+
+        // 만약 타켓과의 거리가 멀다면 다시 추척모드
+        if (Vector3.Distance(_target.transform.position, stateMachine.Player.transform.position) < _stoppingDistance)
+        {
+            stateMachine.ChangeState(stateMachine.RunState);
         }
     }
 }

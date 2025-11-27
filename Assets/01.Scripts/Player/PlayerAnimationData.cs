@@ -15,6 +15,8 @@ public class PlayerAnimationData
     [SerializeField] private string _idleParameterName = "Idle";
     [SerializeField] private string _attackParmeterName = "ComboAttack";
 
+    [SerializeField] private string _skillWheelWindParameterName = "WheelWind";
+
 
     public int BaseParemeterHash { get; private set; }
     public int AutoFindParameterHash { get; private set; }
@@ -24,6 +26,8 @@ public class PlayerAnimationData
 
     public int AttackModeParameterHash { get; private set; }
     public int AttackParameterHash { get; private set; }
+
+    public int SkillWheelWindParameterHash { get; private set; }
 
     public void Initialize()
     {
@@ -35,6 +39,8 @@ public class PlayerAnimationData
         AttackModeParameterHash = Animator.StringToHash(_attackModeParameterName);
         IdleParameterHash = Animator.StringToHash(_idleParameterName);
         AttackParameterHash = Animator.StringToHash(_attackParmeterName);
+
+        SkillWheelWindParameterHash = Animator.StringToHash(_skillWheelWindParameterName);
     }
 
 }

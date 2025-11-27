@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class PlayerAutoFindState : PlayerBaseState
 {
-    private Transform _target;
     private Transform _head;
     private bool _isMovingToTarget = false;
-    private float _stoppingDistance = 2f;
 
     public PlayerAutoFindState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
@@ -114,8 +112,11 @@ public class PlayerAutoFindState : PlayerBaseState
         Vector3 toTarget = (_head.position - stateMachine.Player.transform.position).normalized;
         float dot = Vector3.Dot(_head.forward, toTarget);
 
+        stateMachine.Player.Agent.SetDestination(_target.position);
+
         // 목표와 거리를 비교하여 공격모드로 전환 
-        if (stateMachine.Player.Agent.remainingDistance <= stateMachine.Player.Agent.stoppingDistance)
+        //stateMachine.Player.Agent.remainingDistance <= stateMachine.Player.Agent.stoppingDistance
+        if (Vector3.Distance(_target.transform.position, stateMachine.Player.transform.position) < _stoppingDistance)
         {
             // Target을 바라보도록 방향 전환
             if (dot > -0.5f)
