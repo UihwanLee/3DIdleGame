@@ -54,6 +54,8 @@ public class MonsterBaseState : IState
 
     protected void StopAgent()
     {
+        if (!stateMachine.Monster.Agent.enabled) return;
+
         stateMachine.Monster.Agent.isStopped = true;
     }
 

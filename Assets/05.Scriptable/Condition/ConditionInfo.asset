@@ -18,3 +18,5 @@ MonoBehaviour:
   <HpIncreaseScaling>k__BackingField: 1.2
   BaseAtk: 10
   <AtkIncreasScaling>k__BackingField: 1.2
+  BaseSpeed: 3.5
+  <SpeedIncreasScaling>k__BackingField: 2

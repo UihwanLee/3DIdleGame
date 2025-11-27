@@ -21,9 +21,9 @@ public class MonsterConditionHander : ConditionHandler
     public override void OnDie()
     {
         monster.Animator.SetTrigger("Die");
-        enabled = false;
         monster.Agent.isStopped = true;
         monster.Agent.enabled = false;
+        enabled = false;
 
         // 플레이어에게 보상 주기
         monster.StateMachine.Target.AddCondition(ConditionType.Exp, monster.Data.RewardInfo.GainExp);

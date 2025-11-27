@@ -21,14 +21,17 @@ public enum BuffType
 public class ActvieInfo
 {
     [field: SerializeField][field: Range(1f, 3f)] public int DamageMultiplier { get; private set; }
+    [field: SerializeField][field: Range(0f, 5f)] public float ExcuteDuration { get; private set; }
+    [field: SerializeField][field: Range(0f, 5f)] public float TickInterval { get; private set; }
     [field: SerializeField][field: Range(0f, 1f)] public float Dealing_Start_TransitionTime { get; private set; }
     [field: SerializeField][field: Range(0f, 1f)] public float Dealing_End_TransitionTime { get; private set; }
+    [field: SerializeField] public LayerMask TargetLayer {  get; private set; }
 }
 
 [Serializable]
 public class BuffInfo
 {
-    [field: SerializeField][field: Range(0f, 2f)] public float ValueMultiplier { get; private set; }
+    [field: SerializeField] public float ValueMultiplier { get; private set; }
     [field: SerializeField] public BuffType Type { get; private set; }
     [field: SerializeField][field: Range(0f, 5f)] public float ExcuteDuration { get; private set; }
     [field: SerializeField][field: Range(0f, 5f)] public float TickInterval { get; private set; }

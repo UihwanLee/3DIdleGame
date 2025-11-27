@@ -20,4 +20,8 @@ public class ConditionInfoSO : ScriptableObject
     [field: Header("Atk")]
     [field: SerializeField] public float BaseAtk;
     [field: SerializeField][field: Range(1f, 2f)] public float AtkIncreasScaling { get; private set; }
+
+    [field: Header("Speed")]
+    [field: SerializeField] public float BaseSpeed;
+    [field: SerializeField][field: Range(1f, 2f)] public float SpeedIncreasScaling { get; private set; }
 }
