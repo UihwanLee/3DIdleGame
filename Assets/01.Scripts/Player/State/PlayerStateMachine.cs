@@ -10,7 +10,7 @@ public class PlayerStateMachine : StateMachine
     public int ComboIndex { get; set; }
     public int CurrentComboIndex { get; set; }
 
-    public Health Target { get; set; }
+    public ConditionHandler Target { get; set; }
 
     public PlayerIdleState IdleState { get; private set; }
     public PlayerRunState RunState { get; private set; }

@@ -23,9 +23,9 @@ public class Weapon : MonoBehaviour
 
         alreadyCollider.Add(other);
 
-        if(other.TryGetComponent(out Health health))
+        if(other.TryGetComponent(out ConditionHandler condition))
         {
-            health.TakeDamage(_damage);
+            condition.SubCondition(ConditionType.Hp, _damage);
         }
     }
 

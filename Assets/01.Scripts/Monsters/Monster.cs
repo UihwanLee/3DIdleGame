@@ -18,7 +18,7 @@ public class Monster : MonoBehaviour
     [field: SerializeField] public Weapon Weapon { get; private set; }
     public Transform Head { get; private set; }
 
-    public Health Health { get; private set; }
+    public MonsterConditionHander Condition { get; private set; }
 
     private void Awake()
     {
@@ -29,9 +29,9 @@ public class Monster : MonoBehaviour
 
         Head = transform.GetChild(0).transform;
 
-        Health = GetComponent<Health>();
-
         Weapon = GetComponentInChildren<Weapon>(true);
+
+        Condition = GetComponentInChildren<MonsterConditionHander>();
 
         _stateMachine = new MonsterStateMachine(this);
     }
@@ -39,10 +39,12 @@ public class Monster : MonoBehaviour
     private void Start()
     {
         _stateMachine.ChangeState(_stateMachine.IdleState);
-        Health.OnDie += OnDie;
 
         // 데미지 표시는 Head Transform 위치를 따라감
-        Health.SetDamageTransform(Head);
+
+        Condition = GetComponentInChildren<MonsterConditionHander>();
+        if (Condition == null) Debug.Log("Condition이 없음");
+        Condition.SetDamageTransform(Head);
     }
 
     private void Update()
@@ -50,11 +52,5 @@ public class Monster : MonoBehaviour
         _stateMachine.Update();
     }
 
-    public void OnDie()
-    {
-        Animator.SetTrigger("Die");
-        enabled = false;
-        Agent.isStopped = true;
-        Agent.enabled = false;
-    }
+    public MonsterStateMachine StateMachine { get { return _stateMachine; } }
 }

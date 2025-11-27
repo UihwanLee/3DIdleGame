@@ -41,9 +41,17 @@ public class InventoryUI : MonoBehaviour
         Initialize();
     }
 
+    private void OnDestroy()
+    {
+        if (_player != null)
+        {
+            _player.ItemGetEvent -= AddItem;
+        }
+    }
+
     private void Initialize()
     {
-        _inventoryWindow = GameObject.Find("Window");
+        _inventoryWindow = GameObject.Find("InventoryWindow");
         _slotPanel = transform.FindChild<Transform>("InventorySlots");
 
         _selectedItemIcon = transform.FindChild<Image>("CurItemImg");
@@ -60,6 +68,7 @@ public class InventoryUI : MonoBehaviour
     private void Start()
     {
         _player = GameManager.Instance.Player;
+        _player.ItemGetEvent += AddItem;
 
         _inventoryWindow.SetActive(false);
         slots = new ItemSlot[_slotPanel.childCount];
@@ -96,6 +105,9 @@ public class InventoryUI : MonoBehaviour
         {
             AddItem(item);
         }
+
+        // 무기 장착
+        EquipItem(slots[0]);
     }
 
     public void SelectedItem(int index)
@@ -202,7 +214,9 @@ public class InventoryUI : MonoBehaviour
         ItemData weapon = _currentEquipSlot.item;
         if(weapon != null)
         {
-            //player
+            _player.CurrentWeapon = weapon;
+
+            UpdatePlayerInfo();
         }
     }
 
@@ -214,5 +228,12 @@ public class InventoryUI : MonoBehaviour
     public void UseItem(ItemData item)
     {
 
+    }
+
+    private void UpdatePlayerInfo()
+    {
+        float weaponAtk = _currentEquipSlot.item.data.weaponInfo.baseDamage;
+        float playerAtk = _player.Condition.Atk;
+        _curDamageStat.text = $"{playerAtk + weaponAtk} (+{weaponAtk})";
     }
 }

@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class HpBarUI : MonoBehaviour
 {
     private Image _hpBar;
-    private Health _health;
+    private ConditionHandler _condition;
 
-    private void Awake()
+    private void Start()
     {
         _hpBar = GetComponent<Image>();
-        _health = GetComponentInParent<Health>();
+        _condition = GetComponentInParent<ConditionHandler>();
     }
 
     private void Update()
@@ -21,10 +21,10 @@ public class HpBarUI : MonoBehaviour
 
     private void UpdateHpBar()
     {
-        // HpBar 업데이트
-        int curHealth = _health.CurHealth;
-        int maxHealth = _health.MaxHealth;  // MaxHealth도 런타임 중 자주 변경 될 수 있음
+        _condition = GetComponentInParent<ConditionHandler>();
+        if (_condition == null) Debug.Log("Codition이 없음");
 
-        _hpBar.fillAmount = (curHealth / (float)maxHealth);
+        // HpBar 업데이트
+        _hpBar.fillAmount = (_condition.Hp /_condition.MaxHp);
     }
 }

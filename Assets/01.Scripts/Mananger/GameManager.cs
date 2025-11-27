@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance = null;
+    private StageSelectUI stageSelectUI;
 
     public static GameManager Instance
     {
@@ -37,5 +38,15 @@ public class GameManager : MonoBehaviour
         }
 
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+    }
+
+    private void Start()
+    {
+        stageSelectUI = GameObject.Find("StageSelectUI").GetComponent<StageSelectUI>();
+    }
+
+    public void OpenStageSelectUI()
+    {
+        stageSelectUI.OpenSelectMap();
     }
 }

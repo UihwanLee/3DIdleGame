@@ -91,6 +91,7 @@ public class PlayerBaseState : IState
 
     protected float CaculateDamage(float damageMultiplier)
     {
-        return stateMachine.Player.Data.BaseData.BaseDamage * damageMultiplier;
+        // 플레이어 기본 공격력 * (스킬 계수) + 장착 무기 공격력
+        return stateMachine.Player.Condition.Atk * damageMultiplier + stateMachine.Player.CurrentWeapon.data.weaponInfo.baseDamage;
     }
 }

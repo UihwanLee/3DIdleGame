@@ -26,12 +26,15 @@ public class PlayerAttackState : PlayerAttackModeState
         attackInfoData = stateMachine.Player.Data.AttackData.GetAttackInfoData(comboindex);
         stateMachine.Player.Animator.SetInteger("Combo", comboindex);
         StartAnimation(stateMachine.Player.AnimationData.AttackParameterHash);
+
+        stateMachine.Player.Weapon.gameObject.SetActive(false);
     }
 
     public override void Exit()
     {
         base.Exit();
         StopAnimation(stateMachine.Player.AnimationData.AttackParameterHash);
+        stateMachine.Player.Weapon.gameObject.SetActive(false);
     }
 
     public override void Update()

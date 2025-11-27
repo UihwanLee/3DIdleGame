@@ -18,3 +18,16 @@ MonoBehaviour:
   Damage: 5
   <Dealing_Start_TransitionTime>k__BackingField: 0.1
   <Dealing_End_TransitionTime>k__BackingField: 0.813
+  <RewardInfo>k__BackingField:
+    <GainExp>k__BackingField: 20
+    <GainGold>k__BackingField: 1000
+    <DropItemTables>k__BackingField:
+    - <DropItem>k__BackingField: {fileID: 4527324745991878450, guid: 44cde512e1021e5459515be9390f6131,
+        type: 3}
+      <DropPercentage>k__BackingField: 0.6
+    - <DropItem>k__BackingField: {fileID: 4527324745991878450, guid: 1b9ddf826408a1847a23dc844f48580e,
+        type: 3}
+      <DropPercentage>k__BackingField: 0.3
+    - <DropItem>k__BackingField: {fileID: 4527324745991878450, guid: 72c5178a10f09914da565d51ca4ff0bb,
+        type: 3}
+      <DropPercentage>k__BackingField: 0.1

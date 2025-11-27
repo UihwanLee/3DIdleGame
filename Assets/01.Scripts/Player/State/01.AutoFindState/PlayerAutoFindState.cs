@@ -34,7 +34,7 @@ public class PlayerAutoFindState : PlayerBaseState
         if (monster != null)
         {
             _target = monster.transform;
-            stateMachine.Target = _target.GetComponent<Health>();
+            stateMachine.Target = _target.GetComponent<ConditionHandler>();
 
             if(_target.TryGetComponent<Monster>(out Monster enemy))
             {
@@ -43,9 +43,10 @@ public class PlayerAutoFindState : PlayerBaseState
         }
         else
         {
-            Debug.Log("근방에 몬스터가 없습니다!");
+            Debug.Log("Stage 클리어");
 
-            // 마지막 탈출구 찾기
+            // Stage 선택 UI 보여주기
+            GameManager.Instance.OpenStageSelectUI();
         }
     }
 
@@ -67,7 +68,7 @@ public class PlayerAutoFindState : PlayerBaseState
                 if (monster.transform == stateMachine.Player.transform) continue;
 
                 // 죽은 monster 제외
-                if (monster.GetComponent<Health>().IsDead) continue;
+                if (monster.GetComponent<ConditionHandler>().IsDead) continue;
 
                 // 반경 내에 있는 몬스터들 중에서 가장 가까운 몬스터 찾기
                 float distanceSqr = (monster.transform.position - stateMachine.Player.transform.position).sqrMagnitude;
