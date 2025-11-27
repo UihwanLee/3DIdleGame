@@ -16,9 +16,10 @@ public class ItemSlot : MonoBehaviour
 
     public bool isSelected;
 
-    [SerializeField] private Image icon;
-    [SerializeField] private TextMeshProUGUI quantityText;
-    [SerializeField] private Image highlightBG;
+    [SerializeField] private Image _icon;
+    [SerializeField] private TextMeshProUGUI _quantityText;
+    [SerializeField] private Image _highlightBG;
+    [SerializeField] private TextMeshProUGUI _equipIcon;
 
     public void Initialize(int index, InventoryUI inventory)
     {
@@ -26,36 +27,44 @@ public class ItemSlot : MonoBehaviour
         this.inventory = inventory;
 
         isSelected = false;
-        icon = transform.FindChild<Image>("Icon");
-        quantityText = transform.FindChild<TextMeshProUGUI>("Quntitiy");
-        highlightBG = transform.FindChild<Image>("HighlighBG");
+        _icon = transform.FindChild<Image>("Icon");
+        _quantityText = transform.FindChild<TextMeshProUGUI>("Quntitiy");
+        _highlightBG = transform.FindChild<Image>("HighlighBG");
+        _equipIcon = transform.FindChild<TextMeshProUGUI>("Equip");
 
-        highlightBG.gameObject.SetActive(false);
-        quantityText.text = string.Empty;
+        _highlightBG.gameObject.SetActive(false);
+        _quantityText.text = string.Empty;
+        _equipIcon.gameObject.SetActive(false);
 
         quantity = 0;
     }
 
     public void SelectSlot()
     {
-        highlightBG.gameObject.SetActive(true);
+        _highlightBG.gameObject.SetActive(true);
     }
 
     public void ResetSlot()
     {
-        highlightBG.gameObject.SetActive(false);
+        _highlightBG.gameObject.SetActive(false);
     }
 
     public void SetItem(ItemData item)
     {
-        icon.sprite = item.data.icon;
+        this.item = item;
+        _icon.sprite = item.data.icon;
         quantity++;
-        quantityText.text = quantity.ToString();
+        _quantityText.text = quantity.ToString();
     }
 
     public void PlusCanStackItem()
     {
         quantity = Mathf.Min(item.data.maxStackAmount, quantity + 1);
-        quantityText.text = quantity.ToString();
+        _quantityText.text = quantity.ToString();
+    }
+
+    public void SetEquip(bool equip)
+    {
+        _equipIcon.gameObject.SetActive(equip);
     }
 }
