@@ -18,11 +18,16 @@ MonoBehaviour:
   <SkillCoolTime>k__BackingField: 7
   <Type>k__BackingField: 1
   <ActvieInfo>k__BackingField:
-    <DamageMultiplier>k__BackingField: 0
+    <DamageMultiplier>k__BackingField: 1
+    <ExcuteDuration>k__BackingField: 0
+    <TickInterval>k__BackingField: 0
     <Dealing_Start_TransitionTime>k__BackingField: 0
     <Dealing_End_TransitionTime>k__BackingField: 0
+    <TargetLayer>k__BackingField:
+      serializedVersion: 2
+      m_Bits: 0
   <BuffInfo>k__BackingField:
-    <ValueMultiplier>k__BackingField: 1.2
+    <ValueMultiplier>k__BackingField: 2
     <Type>k__BackingField: 0
     <ExcuteDuration>k__BackingField: 3
     <TickInterval>k__BackingField: 1

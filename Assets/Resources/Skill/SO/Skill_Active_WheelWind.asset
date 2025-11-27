@@ -15,12 +15,17 @@ MonoBehaviour:
   <SkillName>k__BackingField: "\uD720\uC708\uB4DC"
   <SkillIcon>k__BackingField: {fileID: 21300000, guid: 9be2b95b019179040bfa8a56ed12ddf5,
     type: 3}
-  <SkillCoolTime>k__BackingField: 5
+  <SkillCoolTime>k__BackingField: 10
   <Type>k__BackingField: 0
   <ActvieInfo>k__BackingField:
-    <DamageMultiplier>k__BackingField: 0
+    <DamageMultiplier>k__BackingField: 3
+    <ExcuteDuration>k__BackingField: 2
+    <TickInterval>k__BackingField: 0.2
     <Dealing_Start_TransitionTime>k__BackingField: 0
     <Dealing_End_TransitionTime>k__BackingField: 0
+    <TargetLayer>k__BackingField:
+      serializedVersion: 2
+      m_Bits: 64
   <BuffInfo>k__BackingField:
     <ValueMultiplier>k__BackingField: 0
     <Type>k__BackingField: 0
