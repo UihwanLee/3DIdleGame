@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
 
     public Transform Head { get; private set; }
 
-    public PlayerConiditionHandler Condition { get; private set; }
+    public ConditionHandler Condition { get; private set; }
 
     public event Action<ItemData> ItemGetEvent; // 플레이어가 아이템을 흭득했을 때 이벤트
 
@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
 
         _stateMachine = new PlayerStateMachine(this);
 
-        Condition = GetComponent<PlayerConiditionHandler>();
+        Condition = GetComponent<ConditionHandler>();
     }
 
     private void Start()

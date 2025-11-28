@@ -99,6 +99,8 @@ public class MonsterBaseState : IState
 
     protected bool IsInChaseRange()
     {
+        if (stateMachine.Target == null) Debug.Log("Target이 없음");
+
         float playerDistanceSqr = (stateMachine.Target.transform.position - stateMachine.Monster.transform.position).sqrMagnitude;
         return playerDistanceSqr <= stateMachine.Monster.Data.ChaseRange;
     }

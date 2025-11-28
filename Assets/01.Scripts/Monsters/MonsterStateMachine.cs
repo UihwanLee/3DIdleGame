@@ -20,6 +20,8 @@ public class MonsterStateMachine : StateMachine
         this.Monster = monster;
         Target = GameObject.FindGameObjectWithTag("Player").GetComponent<ConditionHandler>();
 
+        if (Target == null) Debug.Log("Target이 또 없음");
+
         IdleState = new MonsterIdleState(this);
         AttackState = new MonsterAttackState(this);
         ChasingState = new MonsterChasingState(this);
