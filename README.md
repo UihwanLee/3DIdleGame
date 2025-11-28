@@ -17,7 +17,7 @@
 
 ## 3. 사용 기술
 
->> 확장 메서드를 활용한 필드 초기화
+> 확장 메서드를 활용한 필드 초기화
 <pre>
 <code>
 public static class FindExtension 
@@ -38,7 +38,7 @@ public static class FindExtension
 </code>
 </pre>
 
->> ISkillCaster를 활용한 스킬 구현
+> ISkillCaster를 활용한 스킬 구현
 <pre>
 <code>
 public interface ISkillCaster
