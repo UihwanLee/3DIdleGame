@@ -27,7 +27,7 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
   <BuffInfo>k__BackingField:
-    <ValueMultiplier>k__BackingField: 0.05
+    <ValueMultiplier>k__BackingField: 0.1
     <Type>k__BackingField: 1
-    <ExcuteDuration>k__BackingField: 4
-    <TickInterval>k__BackingField: 2
+    <ExcuteDuration>k__BackingField: 5
+    <TickInterval>k__BackingField: 1
